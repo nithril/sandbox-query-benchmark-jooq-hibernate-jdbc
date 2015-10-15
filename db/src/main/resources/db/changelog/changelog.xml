@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="ddl" author="nla">
+
+        <createSequence sequenceName="HIBERNATE_SEQUENCE"/>
+
+        <createTable tableName="AUTHOR">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="BOOK">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="TITLE" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AUTHOR_ID" type="BIGINT">
+                <constraints foreignKeyName="FK_AUTHOR_ID" referencedTableName="AUTHOR(ID)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="data" author="nla">
+        <insert tableName="AUTHOR">
+            <column name="ID" value="1"/>
+            <column name="NAME" value="AUTHOR1"/>
+        </insert>
+        <insert tableName="BOOK">
+            <column name="ID" value="1"/>
+            <column name="TITLE" value="TITLE1"/>
+            <column name="AUTHOR_ID" value="1"/>
+        </insert>
+        <insert tableName="BOOK">
+            <column name="ID" value="2"/>
+            <column name="TITLE" value="TITLE1"/>
+            <column name="AUTHOR_ID" value="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
