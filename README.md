@@ -1,7 +1,7 @@
 # sandbox-query-benchmark-jooq-hibernate-jdbc
 Quicky: Query Benchmark Using jOOQ / Hibernate / JDBC
 
-[Source](https://github.com/nithril/sandbox-query-benchmark-jooq-hibernate-jdbc/tree/article-quicky-query-benchmark-jooq-hibernate-jdbc)
+
 
 ## How to Create the DB
 
