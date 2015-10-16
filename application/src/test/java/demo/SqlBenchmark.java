@@ -41,11 +41,20 @@ public class SqlBenchmark {
 
 
 	@Benchmark
+	public Object reference(BenchmarkSpringState state) {
+		return state.getAuthorQueries().reference();
+	}
+
+	@Benchmark
 	public Collection<AuthorWithBooks> findAuthorsWithBooksJooqStreamedGroupBy(BenchmarkSpringState state) {
 		return state.getAuthorQueries().findAuthorsWithBooksJooqStreamedGroupBy();
 	}
 
 
+	@Benchmark
+	public Collection<AuthorWithBooks> findAuthorsWithBooksJdbcStreamed(BenchmarkSpringState state) {
+		return state.getAuthorQueries().findAuthorsWithBooksJdbcStreamed();
+	}
 
 
 	@Benchmark
@@ -74,11 +83,12 @@ public class SqlBenchmark {
 	public static void main(String[] args) throws RunnerException {
 		Options opt = new OptionsBuilder()
 				.include(SqlBenchmark.class.getSimpleName())
-				.warmupIterations(5)
-				.warmupTime(TimeValue.seconds(5))
-				.measurementIterations(5)
-				.measurementTime(TimeValue.seconds(5))
+				.warmupIterations(3)
+				.warmupTime(TimeValue.seconds(3))
+				.measurementIterations(3)
+				.measurementTime(TimeValue.seconds(3))
 				.threads(1)
+				.jvmArgs("-Xmx1g")
 				.forks(1)
 				.build();
 		new Runner(opt).run();

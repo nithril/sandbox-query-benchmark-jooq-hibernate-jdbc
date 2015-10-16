@@ -30,14 +30,22 @@ public class QueryTests {
 
 
 	@Test
+	public void testdd() throws Exception {
+
+		authorQueries.findAuthorsWithBooksJooqStreamedGroupBy();
+	}
+
+	@Test
 	public void testQueries() throws Exception {
 		Collection<AuthorWithBooks> authorsWithBooksGroupBy = sort(authorQueries.findAuthorsWithBooksJooqOldFashionGroupBy());
 		Collection<AuthorWithBooks> authorsWithBooksJdbc = sort(authorQueries.findAuthorsWithBooksJdbc());
+		Collection<AuthorWithBooks> findAuthorsWithBooksJdbcStreamed = sort(authorQueries.findAuthorsWithBooksJdbcStreamed());
 		Collection<AuthorWithBooks> authorsWithBooksJooqGroupBy = sort(authorQueries.findAuthorsWithBooksJooqIntoGroup());
 		Collection<AuthorWithBooks> authorsWithBooksLazyGroupBy = sort(authorQueries.findAuthorsWithBooksJooqFetchLazyOldFashionGroupBy());
 		Collection<AuthorWithBooks> authorsWithBooksStreamedGroupBy = sort(authorQueries.findAuthorsWithBooksJooqStreamedGroupBy());
 
 		Assert.assertTrue(authorsWithBooksGroupBy.containsAll(authorsWithBooksJdbc));
+		Assert.assertTrue(authorsWithBooksGroupBy.containsAll(findAuthorsWithBooksJdbcStreamed));
 		Assert.assertTrue(authorsWithBooksGroupBy.containsAll(authorsWithBooksJooqGroupBy));
 		Assert.assertTrue(authorsWithBooksGroupBy.containsAll(authorsWithBooksLazyGroupBy));
 		Assert.assertTrue(authorsWithBooksGroupBy.containsAll(authorsWithBooksStreamedGroupBy));
