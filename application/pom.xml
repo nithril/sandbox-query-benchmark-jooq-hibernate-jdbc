@@ -17,7 +17,7 @@
         <jdbc.url>jdbc:h2:../test</jdbc.url>
         <jdbc.username>sa</jdbc.username>
         <jdbc.password></jdbc.password>
-        <jooq.version>3.7.0</jooq.version>
+        <jooq.version>3.7.2</jooq.version>
         <foo>ddddddd</foo>
     </properties>
 
@@ -48,4 +48,85 @@
         </dependency>
     </dependencies>
 
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+
+                <!-- Specify the maven code generator plugin -->
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>3.7.2</version>
+
+                <!-- The plugin should hook into the generate goal -->
+              <!--  <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>-->
+
+                <!-- Manage the plugin's dependency. In this example, we'll use a PostgreSQL database -->
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.test</groupId>
+                        <artifactId>jooq-extension</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <!-- Specify the plugin configuration.
+                     The configuration format is the same as for the standalone code generator -->
+                <configuration>
+
+                    <!-- JDBC connection parameters -->
+                    <jdbc>
+                        <driver>org.h2.Driver</driver>
+                        <url>${jdbc.url}</url>
+                        <user>${jdbc.username}</user>
+                        <password>${jdbc.password}</password>
+                    </jdbc>
+
+                    <!-- Generator parameters -->
+                    <generator>
+                        <database>
+                            <name>org.jooq.util.h2.H2Database</name>
+                            <includes>.*</includes>
+                            <excludes></excludes>
+                       <!--     <inputSchema>public</inputSchema>-->
+                        </database>
+                        <target>
+                            <packageName>demo.dom</packageName>
+                            <directory>target/generated-sources/jooq</directory>
+                        </target>
+                        <generate>
+                            <!--<deprecated>false</deprecated>-->
+                            <daos>true</daos>
+                           <!-- <interfaces>true</interfaces>-->
+
+                        </generate>
+
+                        <strategy>
+                            <name>demo.jooq.CustomGeneratorStrategy</name>
+                        </strategy>
+                    </generator>
+                </configuration>
+            </plugin>
+
+
+
+
+
+
+
+        </plugins>
+    </build>
 </project>
