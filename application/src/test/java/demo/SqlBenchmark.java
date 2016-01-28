@@ -38,7 +38,7 @@ public class SqlBenchmark {
 			return authorQueries;
 		}
 	}
-
+/*
 
 	@Benchmark
 	public Object reference(BenchmarkSpringState state) {
@@ -78,7 +78,14 @@ public class SqlBenchmark {
 	@Benchmark
 	public Collection<AuthorWithBooks> findAuthorsWithBooksLazyGroupBy(BenchmarkSpringState state) {
 		return state.getAuthorQueries().findAuthorsWithBooksJooqFetchLazyOldFashionGroupBy();
+	}*/
+
+
+	@Benchmark
+	public Object findAuthorsWithBooksJooqOldFashionGroupBy(BenchmarkSpringState state) {
+		return state.getAuthorQueries().findAuthorsWithBooksJooqOldFashionGroupBy();
 	}
+
 
 	public static void main(String[] args) throws RunnerException {
 		Options opt = new OptionsBuilder()
@@ -88,9 +95,14 @@ public class SqlBenchmark {
 				.measurementIterations(3)
 				.measurementTime(TimeValue.seconds(3))
 				.threads(1)
-				.jvmArgs("-Xmx1g")
+				.jvmArgs("-Xmx1g"
+						,"-XX:MaxInlineSize=100"
+						,"-XX:MaxRecursiveInlineLevel=3"
+						, "-XX:MaxInlineLevel=18")
 				.forks(1)
 				.build();
 		new Runner(opt).run();
 	}
+
+
 }

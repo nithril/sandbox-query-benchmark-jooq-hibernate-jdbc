@@ -29,7 +29,7 @@
         <jdbc.url>jdbc:h2:../test</jdbc.url>
         <jdbc.username>sa</jdbc.username>
         <jdbc.password></jdbc.password>
-        <jooq.version>3.7.2</jooq.version>
+        <jooq.version>3.8.0-SNAPSHOT</jooq.version>
     </properties>
 
     <dependencies>
