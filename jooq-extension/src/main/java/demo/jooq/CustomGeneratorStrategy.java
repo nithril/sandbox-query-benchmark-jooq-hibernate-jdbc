@@ -1,8 +1,8 @@
 package demo.jooq;
 
 import org.jooq.tools.StringUtils;
-import org.jooq.util.DefaultGeneratorStrategy;
-import org.jooq.util.Definition;
+import org.jooq.codegen.DefaultGeneratorStrategy;
+import org.jooq.meta.Definition;
 
 /**
  * Created by nlabrot on 28/09/15.

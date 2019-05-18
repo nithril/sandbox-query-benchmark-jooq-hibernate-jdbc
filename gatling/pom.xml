@@ -20,7 +20,7 @@
         <dependency>
             <groupId>io.gatling.highcharts</groupId>
             <artifactId>gatling-charts-highcharts</artifactId>
-            <version>2.1.7</version>
+            <version>3.1.2</version>
         </dependency>
     </dependencies>
 
@@ -36,12 +36,12 @@
             <plugin>
                 <groupId>io.gatling</groupId>
                 <artifactId>gatling-maven-plugin</artifactId>
-                <version>2.1.7</version>
+                <version>3.0.2</version>
                 <configuration>
                     <configFolder>src/test/resources</configFolder>
-                    <dataFolder>src/test/resources/data</dataFolder>
+<!--                    <dataFolder>src/test/resources/data</dataFolder>-->
                     <resultsFolder>target/gatling/results</resultsFolder>
-                    <bodiesFolder>src/test/resources/bodies</bodiesFolder>
+<!--                    <bodiesFolder>src/test/resources/bodies</bodiesFolder>-->
                     <simulationsFolder>src/test/scala</simulationsFolder>
                     <runMultipleSimulations>true</runMultipleSimulations>
                     <simulationClass>ReferenceSimulation</simulationClass>

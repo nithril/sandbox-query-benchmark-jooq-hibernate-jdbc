@@ -11,13 +11,21 @@
     </parent>
 
     <artifactId>db</artifactId>
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-maven-plugin -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.6.3</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.6.3</version>
                 <configuration>
                     <changeLogFile>src/main/resources/db/changelog/changelog.xml</changeLogFile>
                     <driver>org.h2.Driver</driver>
