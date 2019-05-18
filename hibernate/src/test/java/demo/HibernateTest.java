@@ -1,37 +1,5 @@
 package demo;
 
-import javax.persistence.EntityGraph;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.io.File;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import org.apache.commons.io.FileUtils;
-import org.hibernate.CacheMode;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.Session;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.annotation.Commit;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
-
-import antlr.collections.impl.IntRange;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.domain.Author;
 import demo.domain.AuthorWithBooks;
@@ -39,9 +7,27 @@ import demo.domain.Book;
 import demo.repository.AuthorRepository;
 import demo.repository.BookRepository;
 import demo.service.AuthorQueries;
+import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+import java.io.File;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+//@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+//@SpringApplicationConfiguration(classes = Application.class)
 @Commit
 @Transactional
 public class HibernateTest {
@@ -76,12 +62,11 @@ public class HibernateTest {
 
 	@Test
 	public void testLoadData() throws Exception {
-
 		bookRepository.deleteAll();
 		authorRepository.deleteAll();
 
-		for (int i = 0; i < 100; i++) {
 
+		for (int i = 0; i < 100; i++) {
 			Author author = new Author();
 			author.setName("AUTHOR_" + i);
 
@@ -90,8 +75,7 @@ public class HibernateTest {
 				book.setTitle("TITLE_" + b);
 				return bookRepository.save(book);
 			}).collect(Collectors.toList()));
-
-			author = authorRepository.save(author);
+			authorRepository.save(author);
 		}
 	}
 
@@ -99,11 +83,8 @@ public class HibernateTest {
 
 	private Collection<AuthorWithBooks> sort(Collection<AuthorWithBooks> authorWithBooks){
 		return authorWithBooks.stream()
-				.sorted((l, r) -> l.getAuthor().getId().compareTo(r.getAuthor().getId()))
-				.map(ab -> {
-					ab.getBooks().sort((l, r) -> l.getId().compareTo(r.getId()));
-					return ab;
-				})
+				.sorted(Comparator.comparing(authorWithBooks1 -> authorWithBooks1.getAuthor().getId()))
+				.peek(ab -> ab.getBooks().sort(Comparator.comparing(Book::getId)))
 				.collect(Collectors.toList());
 	}
 
